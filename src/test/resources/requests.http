@@ -12,11 +12,19 @@ GET http://localhost:8080/offices/getAllInCity?city=St. Petersburg
 
 ###  Obtaining complete information about the office
 
-GET http://localhost:8080/offices/getById?id=1
+GET http://localhost:8080/offices/getById?id=4
 
 ### Getting exception
 
 GET http://localhost:8080/offices/getById?id=999
+
+### "Delete" office by id=
+
+POST http://localhost:8080/offices/removeById?id=4
+
+### "Open" office by id=
+
+POST http://localhost:8080/offices/restoreById?id=4
 
 ### Create office
 
@@ -46,7 +54,7 @@ Content-Type: application/json
   "requisiteEmail": "transporter@example.ru"
 }
 
-###
+### Update office
 
 POST http://localhost:8080/offices/save
 Content-Type: application/json

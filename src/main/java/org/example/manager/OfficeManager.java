@@ -107,11 +107,11 @@ public class OfficeManager {
                         "name", requestDTO.getName(),
                         "city", requestDTO.getCity(),
                         "address", requestDTO.getAddress(),
-                        "undergrounds", requestDTO.getUndergrounds().toArray(),
-                        "workingHours", requestDTO.getWorkingHours().toArray(),
+                        "undergrounds", requestDTO.getUndergrounds().toArray(new String[]{}),
+                        "workingHours", requestDTO.getWorkingHours().toArray(new String[]{}),
                         "restrictionWeight", requestDTO.getRestrictionWeight(),
                         "description", requestDTO.getDescription(),
-                        "paymentMethods", requestDTO.getPaymentMethods().toArray(),
+                        "paymentMethods", requestDTO.getPaymentMethods().toArray(new String[]{}),
                         "requisitePhone", requestDTO.getRequisitePhone(),
                         "requisiteEmail", requestDTO.getRequisiteEmail()
                 ),
@@ -148,14 +148,15 @@ public class OfficeManager {
                             payment_methods, requisite_phone, requisite_email
                             """,
                     Map.of(
+                            "id", requestDTO.getId(),
                             "name", requestDTO.getName(),
                             "city", requestDTO.getCity(),
                             "address", requestDTO.getAddress(),
-                            "undergrounds", requestDTO.getUndergrounds().toArray(),
-                            "working_hours", requestDTO.getWorkingHours().toArray(),
-                            "restriction_weight", requestDTO.getRestrictionWeight(),
+                            "undergrounds", requestDTO.getUndergrounds().toArray(new String[]{}),
+                            "workingHours", requestDTO.getWorkingHours().toArray(new String[]{}),
+                            "restrictionWeight", requestDTO.getRestrictionWeight(),
                             "description", requestDTO.getDescription(),
-                            "payment_methods", requestDTO.getPaymentMethods().toArray()
+                            "paymentMethods", requestDTO.getPaymentMethods().toArray(new String[]{})
                     ),
                     officeFullRowMapper
             );
@@ -177,6 +178,32 @@ public class OfficeManager {
             return responseDTO;
         } catch (EmptyResultDataAccessException e) {
             throw new ProductNotFoundException(e);
+        }
+    }
+
+    public void removeById(long id) {
+        final int affected = template.update(
+                // language=PostgreSQL
+                """
+                    UPDATE offices SET removed = TRUE WHERE id = :id
+                    """,
+                Map.of("id", id)
+        );
+        if (affected == 0) {
+            throw new ProductNotFoundException("office with id " + id + " not found");
+        }
+    }
+
+    public void restoreById(long id) {
+        final int affected = template.update(
+                // language=PostgreSQL
+                """
+                    UPDATE offices SET removed = FALSE WHERE id = :id
+                    """,
+                Map.of("id", id)
+        );
+        if (affected == 0) {
+            throw new ProductNotFoundException("office with id " + id + " not found");
         }
     }
 }

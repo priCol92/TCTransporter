@@ -28,4 +28,14 @@ public class OfficesController {
     public OfficeSaveResponseDTO save (@RequestBody OfficeSaveRequestDTO requestDTO){
         return manager.save(requestDTO);
     }
+
+    @PostMapping("/removeById")
+    public void removeById(@RequestParam long id) {
+        manager.removeById(id);
+    }
+
+    @PostMapping("/restoreById")
+    public void restoreById(@RequestParam long id) {
+        manager.restoreById(id);
+    }
 }
