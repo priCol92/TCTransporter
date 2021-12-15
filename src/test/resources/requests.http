@@ -1,10 +1,42 @@
+### Loading an image - "noImage"
+
+POST http://localhost:8080/media/multipart
+Content-Type: multipart/form-data; boundary=WebBoundary
+
+--WebBoundary
+Content-Disposition: form-data; name="file"; filename="package1.png"
+Content-Type: image/png
+
+< noImage.png
+--WebBoundary--
+
+> {%
+client.global.set('image', response.body.name);
+%}
+
+###  Loading an images
+POST http://localhost:8080/media/multi-multipart
+Content-Type: multipart/form-data; boundary=WebBoundary
+
+--WebBoundary
+Content-Disposition: form-data; name="files"; filename="package1.png"
+Content-Type: image/png
+
+< package1.png
+--WebBoundary
+Content-Disposition: form-data; name="files"; filename="package2.jpg"
+Content-Type: image/jpeg
+
+< package2.jpg
+--WebBoundary--
+
 ### Getting a list of offices in Kazan
 
 GET http://localhost:8080/offices/getAllInCity?city=Kazan
 
-###  Getting a list of offices in Moskva
+###  Getting a list of offices in Moscow
 
-GET http://localhost:8080/offices/getAllInCity?city=Moskva
+GET http://localhost:8080/offices/getAllInCity?city=Moscow
 
 ###  Getting a list of offices in St. Petesburg
 
@@ -81,4 +113,43 @@ Content-Type: application/json
   ],
   "requisitePhone": "+7(843)XXX-XX-XX",
   "requisiteEmail": "transporter@example.ru"
+}
+
+### Getting a list of tariffs
+
+GET http://localhost:8080/tariffs/getAll
+
+### Register order
+
+POST http://localhost:8080/orders/register
+Content-Type: application/json
+
+{
+  "tariffId": 1,
+  "routeId": 1,
+  "images": [
+    "{{image}}"
+  ]
+}
+
+### Register order KZN-MOW
+
+POST http://localhost:8080/orders/register
+Content-Type: application/json
+
+{
+  "tariffId": 1,
+  "routeId": 1,
+  "images": []
+}
+
+### Register order KZN-St. Peterburg
+
+POST http://localhost:8080/orders/register
+Content-Type: application/json
+
+{
+  "tariffId": 2,
+  "routeId": 3,
+  "images": []
 }
