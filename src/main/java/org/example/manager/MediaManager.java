@@ -33,7 +33,7 @@ public class MediaManager {
             final String name = generateName(file.getContentType());
             file.transferTo(path.resolve(name));
             return new UploadSingleMediaResponseDTO(name);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new UploadException(e);
         }
     }

@@ -1,10 +1,10 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.OfficeGetByIdResponseDTO;
 import org.example.dto.OfficeSaveRequestDTO;
 import org.example.dto.OfficeSaveResponseDTO;
 import org.example.dto.OfficesGetAllResponseDTO;
-import org.example.dto.OfficeGetByIdResponseDTO;
 import org.example.manager.OfficeManager;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +20,12 @@ public class OfficesController {
     }
 
     @GetMapping("/getById")
-    public OfficeGetByIdResponseDTO getById (@RequestParam long id) {
+    public OfficeGetByIdResponseDTO getById(@RequestParam long id) {
         return manager.getById(id);
     }
 
     @PostMapping("/save")
-    public OfficeSaveResponseDTO save (@RequestBody OfficeSaveRequestDTO requestDTO){
+    public OfficeSaveResponseDTO save(@RequestBody OfficeSaveRequestDTO requestDTO) {
         return manager.save(requestDTO);
     }
 

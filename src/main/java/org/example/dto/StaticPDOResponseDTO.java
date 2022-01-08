@@ -9,16 +9,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TariffGetAllResponseDTO {
-    private List<Tariff> tariffs;
+public class StaticPDOResponseDTO {
+    private List<Office> offices;
 
     @NoArgsConstructor
     @AllArgsConstructor
     @Data
-    public static class Tariff {
-        private long id;
+    public static class Office {
+        private String fromCity;
         private String name;
-        private String description;
+        private long id;
+        private long numberOfOrders;
     }
 }
-

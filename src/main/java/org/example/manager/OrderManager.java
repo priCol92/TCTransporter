@@ -1,17 +1,12 @@
 package org.example.manager;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.OrderGetByIdResponseDTO;
 import org.example.dto.OrderRegisterRequestDTO;
 import org.example.dto.OrderRegisterResponseDTO;
 import org.example.exception.ProductNotFoundException;
-import org.example.model.OrderModel;
-import org.example.model.OrderRouteModel;
-import org.example.model.OrderRoutePartsModel;
-import org.example.model.OrderTariffModel;
-import org.example.rowmapper.OrderRoutePartsRowMapper;
-import org.example.rowmapper.OrderRouteRowMapper;
-import org.example.rowmapper.OrderRowMapper;
-import org.example.rowmapper.OrderTariffRowMapper;
+import org.example.model.*;
+import org.example.rowmapper.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -26,12 +21,39 @@ public class OrderManager {
     private final OrderTariffRowMapper orderTariffRowMapper;
     private final OrderRouteRowMapper orderRouteRowMapper;
     private final OrderRowMapper orderRowMapper;
+    private final OrderGetByIdRowMapper orderGetByIdRowMapper;
     private final OrderRoutePartsRowMapper orderRoutePartsRowMapper;
     private final String[] defaultImages = new String[]{"noImage.png"};
     private final int averageSpeed = 70;
-    //private final int internalWorksTime = 5;
     private final int travelTime = 9;
 
+    public OrderGetByIdResponseDTO getById(long id) {
+        try {
+            final OrderGetByIdModel item = template.queryForObject(
+                    // language=PostgreSQL
+                    """
+                             SELECT id, tariff_name, from_city, to_city, time, 
+                                    price, images FROM orders
+                            WHERE id = :id
+                            """,
+                    Map.of("id", id),
+                    orderGetByIdRowMapper
+            );
+            return new OrderGetByIdResponseDTO(new OrderGetByIdResponseDTO.Order(
+                    item.getId(),
+                    item.getTariffName(),
+                    item.getFromCity(),
+                    item.getToCity(),
+                    item.getTime(),
+                    item.getPrice(),
+                    item.getImages()
+            ));
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new ProductNotFoundException(e);
+        }
+
+    }
 
     public OrderRegisterResponseDTO register(OrderRegisterRequestDTO requestDTO) {
         try {
@@ -68,16 +90,21 @@ public class OrderManager {
             final OrderModel order = template.queryForObject(
                     // language=PostgreSQL
                     """
-                            INSERT INTO orders (tariff_id, tariff_name, route_id, from_city, to_city, time, price, images) 
-                            VALUES (:tariffId, :tariffName, :routeId, :fromCity, :toCity, :time, :price, :images)
-                            RETURNING id, tariff_id, tariff_name, route_id, from_city, to_city, time, price, images
+                            INSERT INTO orders (tariff_id, tariff_name, route_id, from_city,id_office_from_city,
+                            to_city, id_office_to_city,time, price, images) 
+                            VALUES (:tariffId, :tariffName, :routeId, :fromCity, :idOfficeFromCity,
+                            :toCity, :idOfficeToCity,:time, :price, :images)
+                            RETURNING id, tariff_id, tariff_name, route_id, from_city, id_office_from_city,
+                             to_city, id_office_to_city, time, price, images
                             """,
                     Map.of(
                             "tariffId", requestDTO.getTariffId(),
                             "tariffName", tariff.getName(),
                             "routeId", requestDTO.getRouteId(),
                             "fromCity", route.getFromCity(),
+                            "idOfficeFromCity", requestDTO.getIdOfficeFromCity(),
                             "toCity", route.getToCity(),
+                            "idOfficeToCity", requestDTO.getIdOfficeToCity(),
                             "time", calculateTime(routeParts),
                             "price", calculatePrice(routeParts, tariff.getAmountKm()),
                             "images", getImage(requestDTO.getImages())
@@ -120,7 +147,6 @@ public class OrderManager {
 
         return time;
     }
-
 
     private int calculatePrice(List<OrderRoutePartsModel> routeParts, double amountKm) {
         int totalSum = 0;

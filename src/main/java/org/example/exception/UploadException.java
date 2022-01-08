@@ -1,7 +1,5 @@
 package org.example.exception;
 
-import java.io.IOException;
-
 public class UploadException extends RuntimeException {
     public UploadException() {
     }

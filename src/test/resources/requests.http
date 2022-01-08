@@ -1,3 +1,5 @@
+                                              ### MEDIA ###
+
 ### Loading an image - "noImage"
 
 POST http://localhost:8080/media/multipart
@@ -29,6 +31,8 @@ Content-Type: image/jpeg
 
 < package2.jpg
 --WebBoundary--
+
+                                              ### CRUD OFFICE ###
 
 ### Getting a list of offices in Kazan
 
@@ -119,18 +123,8 @@ Content-Type: application/json
 
 GET http://localhost:8080/tariffs/getAll
 
-### Register order
+                                              ### ORDERS ###
 
-POST http://localhost:8080/orders/register
-Content-Type: application/json
-
-{
-  "tariffId": 1,
-  "routeId": 1,
-  "images": [
-    "{{image}}"
-  ]
-}
 
 ### Register order KZN-MOW
 
@@ -140,7 +134,11 @@ Content-Type: application/json
 {
   "tariffId": 1,
   "routeId": 1,
-  "images": []
+  "idOfficeFromCity": 3,
+  "idOfficeToCity": 4,
+  "images": [
+    "{{image}}"
+  ]
 }
 
 ### Register order KZN-St. Peterburg
@@ -151,5 +149,30 @@ Content-Type: application/json
 {
   "tariffId": 2,
   "routeId": 3,
+  "idOfficeFromCity": 2,
+  "idOfficeToCity": 8,
   "images": []
 }
+
+###  Obtaining information about the order
+
+GET http://localhost:8080/orders/getById?id=1000004
+
+### Getting exception
+
+GET http://localhost:8080/orders/getById?id=999
+
+                                              ### STATIC ###
+
+### Getting route distance
+
+GET http://localhost:8080/static/getAllRoute
+
+### Gettig most popular office from city
+
+GET http://localhost:8080/static/popularDepartureOffice?city=Kazan
+
+### Gettig most popular office to city
+
+GET http://localhost:8080/static/popularPickupOffice?city=Moscow
+

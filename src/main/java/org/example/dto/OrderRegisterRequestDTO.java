@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 public class OrderRegisterRequestDTO {
     private long tariffId;
     private long routeId;
-    private String [] images;
+    private long idOfficeFromCity;
+    private long idOfficeToCity;
+    private String[] images;
 }

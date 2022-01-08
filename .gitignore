@@ -4,6 +4,9 @@ Thumbs.db*
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+### Application ###
+/media/
+
 ### STS ###
 .apt_generated
 .classpath

@@ -1,10 +1,10 @@
 package org.example.manager;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.OfficeGetByIdResponseDTO;
 import org.example.dto.OfficeSaveRequestDTO;
 import org.example.dto.OfficeSaveResponseDTO;
 import org.example.dto.OfficesGetAllResponseDTO;
-import org.example.dto.OfficeGetByIdResponseDTO;
 import org.example.exception.ProductNotFoundException;
 import org.example.model.OfficeBasicModel;
 import org.example.model.OfficeFullModel;
@@ -185,8 +185,8 @@ public class OfficeManager {
         final int affected = template.update(
                 // language=PostgreSQL
                 """
-                    UPDATE offices SET removed = TRUE WHERE id = :id
-                    """,
+                        UPDATE offices SET removed = TRUE WHERE id = :id
+                        """,
                 Map.of("id", id)
         );
         if (affected == 0) {
@@ -198,8 +198,8 @@ public class OfficeManager {
         final int affected = template.update(
                 // language=PostgreSQL
                 """
-                    UPDATE offices SET removed = FALSE WHERE id = :id
-                    """,
+                        UPDATE offices SET removed = FALSE WHERE id = :id
+                        """,
                 Map.of("id", id)
         );
         if (affected == 0) {

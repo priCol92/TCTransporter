@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class OrderRegisterResponseDTO {
+public class OrderGetByIdResponseDTO {
     private Order order;
 
     @NoArgsConstructor
@@ -19,7 +19,7 @@ public class OrderRegisterResponseDTO {
         private String fromCity;
         private String toCity;
         private String time;
-        private String[] images;
         private int price;
+        private String[] images;
     }
 }

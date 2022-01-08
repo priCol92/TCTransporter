@@ -1,6 +1,5 @@
 package org.example.rowmapper;
 
-import org.example.model.OfficeBasicModel;
 import org.example.model.OfficeFullModel;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
