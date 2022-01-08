@@ -41,27 +41,49 @@ class OfficeCRUDTest {
                                 // language=JSON
                                 """
                                         {
-                                          "offices": [
-                                            {
-                                              "fromCity": "Moscow",
-                                              "name": "MOW01",
-                                              "id": 4,
-                                              "numberOfOrders": 4
-                                            },
-                                            {
-                                              "fromCity": "Moscow",
-                                              "name": "MOW03",
-                                              "id": 6,
-                                              "numberOfOrders": 2
-                                            },
-                                            {
-                                              "fromCity": "Moscow",
-                                              "name": "MOW02",
-                                              "id": 5,
-                                              "numberOfOrders": 1
-                                            }
-                                          ]
-                                        }
+                                           "offices": [
+                                             {
+                                               "id": 4,
+                                               "name": "MOW01",
+                                               "address": "пр. Дмитровский, 4",
+                                               "undergrounds": [
+                                                 "Дмитровская"
+                                               ],
+                                               "workingHours": [
+                                                 "Пн-Пт 10:00-20:00",
+                                                 "Сб-Вс 10:00-18:00"
+                                               ],
+                                               "restrictionWeight": "Вес: от 0 до 35 кг"
+                                             },
+                                             {
+                                               "id": 5,
+                                               "name": "MOW02",
+                                               "address": "ул. Весенняя, 3, корп. 1",
+                                               "undergrounds": [
+                                                 "Ховрино",
+                                                 "Селигерская"
+                                               ],
+                                               "workingHours": [
+                                                 "Пн-Пт 10:00-20:00",
+                                                 "Сб-Вс 10:00-18:00"
+                                               ],
+                                               "restrictionWeight": "Вес: от 0 до 35 кг"
+                                             },
+                                             {
+                                               "id": 6,
+                                               "name": "MOW03",
+                                               "address": "ул. Василия Петушкова, 23",
+                                               "undergrounds": [
+                                                 "Волоколамская"
+                                               ],
+                                               "workingHours": [
+                                                 "Пн-Пт 09:00-21:00",
+                                                 "Сб-Вс 09:00-19:00"
+                                               ],
+                                               "restrictionWeight": "Вес: от 0 до 35 кг"
+                                             }
+                                           ]
+                                         }
                                         """
                         )
                 );

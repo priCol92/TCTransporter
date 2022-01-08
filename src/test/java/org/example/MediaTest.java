@@ -32,7 +32,7 @@ class MediaTest {
 
     @Test
     void shouldUploadSingleMultipart() throws Exception {
-        final MockMultipartFile file = new MockMultipartFile("file", "package1.png", MediaType.IMAGE_JPEG_VALUE, TestUtils.inputStreamFromResources("package1.png"));
+        final MockMultipartFile file = new MockMultipartFile("file", "package1.png", MediaType.IMAGE_PNG_VALUE, TestUtils.inputStreamFromResources("package1.png"));
 
         mockMvc.perform(
                         MockMvcRequestBuilders.multipart("/media/multipart")
