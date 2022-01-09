@@ -15,4 +15,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: maven build
-        run: mvn -B test
+        run: mvn -B package
+      - name: upload jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: app.jar
+          path: target/TCTransporter-1.0.jar
