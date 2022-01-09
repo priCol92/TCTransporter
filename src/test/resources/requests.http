@@ -119,6 +119,10 @@ Content-Type: application/json
   "requisiteEmail": "transporter@example.ru"
 }
 
+###
+
+                                              ### TARRIFFS ###
+
 ### Getting a list of tariffs
 
 GET http://localhost:8080/tariffs/getAll
